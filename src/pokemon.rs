@@ -5,26 +5,25 @@ use std::error::Error;
 
 extern crate serde;
 extern crate serde_json;
+
 use serde_derive::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
  pub struct TranslatedPokemon{
-     //success: Success,
-     contents: Contents
+     pub contents: Contents
 
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
-struct Success{
-    total: i32
+ pub struct Contents{
+    pub translated: String,
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
- struct Contents{
-    translated: String,
-    //text: String
+#[derive(Serialize, Deserialize)]
+pub struct Pokemon{
+    pub name: String,
+    pub description: String
 }
-
 
 pub fn get_pokemon_description(pokemon_name: &str) 
 -> Result<String, Box<dyn Error>> {
@@ -44,7 +43,7 @@ pub fn get_pokemon_description(pokemon_name: &str)
         if let Some(text) = elem_text.pop() {
             pokemon_description.push_str(text.trim())  
         }
-       
+
     }
 
     Ok(pokemon_description)
