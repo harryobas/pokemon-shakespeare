@@ -1,6 +1,7 @@
 use scraper::{Html, Selector};
 use reqwest::blocking::{get, Client};
 use std::collections::HashMap;
+use std::error::Error;
 
 extern crate serde;
 extern crate serde_json;
@@ -24,16 +25,16 @@ struct Success{
     //text: String
 }
 
-pub fn get_pokemon_description(pokemon_name: &str) -> String {
+
+pub fn get_pokemon_description(pokemon_name: &str) 
+-> Result<String, Box<dyn Error>> {
     const URL: &str = "https://www.pokemon.com/us/pokedex/";
 
     let uri = format!("{}{}", URL, pokemon_name);
     let mut pokemon_description = String::new();
 
-    let body = get(&uri)
-        .expect("not found")
-        .text()
-        .expect("decode error");
+    let body = get(&uri)?.text()?;
+    
     let fragment = Html::parse_document(&body);
     let selector = Selector::parse("p.version-x").expect("parse error");
 
@@ -46,7 +47,7 @@ pub fn get_pokemon_description(pokemon_name: &str) -> String {
        
     }
 
-    pokemon_description
+    Ok(pokemon_description)
 
 }
 
@@ -75,23 +76,16 @@ mod tests {
     use super::*;
 
     #[test] 
-    fn test_get_pokemon_description_with_valid_pokemon_name(){
-        let pokemon_name = "Ursaring";
-        let description = "In the forests inhabited by Ursaring, it is said that there are many streams and towering trees where they gather food. This Pokémon walks through its forest gathering food every day."; 
-        assert_eq!(get_pokemon_description(pokemon_name), description)
-    }
-
-    #[test]
-    fn test_get_pokemon_description_with_invalid_pokemon_name(){
-        let pokemon_name = "perry";
-        assert_eq!(get_pokemon_description(pokemon_name), "")
+    fn test_get_pokemon_description(){
+        let pokemon_name = "Ursaring"; 
+        assert!(get_pokemon_description(pokemon_name).is_ok())
     }
 
     #[test]
     fn test_shakespeare_translate(){
         let translate = "In the forests did inhabit by ursaring,  't is did doth sayeth yond thither art many streams and towering trees whither they gather food. This pokémon walks through its forest gathering food every day.";
         let txt =  "In the forests inhabited by Ursaring, it is said that there are many streams and towering trees where they gather food. This Pokémon walks through its forest gathering food every day.";
-
+        
         let contents = Contents{translated: translate.to_string()};
         let t_pokemon = TranslatedPokemon{contents: contents};
 
