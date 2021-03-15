@@ -60,7 +60,6 @@ pub fn shakespeare_translate(pokemon_description: &str)
     params.insert("text", pokemon_description);
 
     let client = Client::new();
-
     let resp = client.post(URL).form(&params).send()?.text()?;
     let translated_pokemon: TranslatedPokemon = serde_json::from_str(&resp)?;
 
@@ -71,17 +70,16 @@ pub fn shakespeare_translate(pokemon_description: &str)
 mod tests {
     use super::*;
 
-    #[test] 
+    #[test]
     fn test_get_pokemon_description(){
         let pokemon_name = "Ursaring"; 
-        assert!(get_pokemon_description(pokemon_name).is_ok())
+        assert!(get_pokemon_description(pokemon_name).is_ok());
     }
 
     #[test]
     fn test_shakespeare_translate(){
         let txt = "In the forests inhabited by Ursaring, it is said that there are many streams and towering trees where they gather food. This Pokémon walks through its forest gathering food every day.";
-
-        assert!(shakespeare_translate(txt).is_ok())
+        assert!(shakespeare_translate(txt).is_ok());
     }
 
 }

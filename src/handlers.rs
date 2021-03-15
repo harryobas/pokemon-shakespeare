@@ -34,15 +34,26 @@ mod test{
     use super::*;
     use rocket::routes;
     use rocket::local::Client;
+    use rocket::http::ContentType;
 
     #[test]
-    fn process(){
+    fn test_process_with_valid_pokemon_name(){
         let rocket_server = rocket::ignite().mount("/", routes![process]);
         let client = Client::new(rocket_server).expect("valid rocket instance");
         let response = client.get("/pokemon/charizard").dispatch();
 
         assert_eq!(response.status(), Status::Ok);
-    
+        assert_eq!(response.content_type(), Some(ContentType::JSON));
+    }
+
+    #[test]
+    fn test_process_with_invalid_pokemon_name(){
+        let rocket_server = rocket::ignite().mount("/", routes![process]);
+        let client = Client::new(rocket_server).expect("valid rocket instance");
+        let response = client.get("/pokemon/perry").dispatch();
+
+        assert_eq!(response.status(), Status::NotFound);
+
     }
 
 }
