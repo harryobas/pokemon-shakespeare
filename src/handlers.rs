@@ -32,7 +32,7 @@ mod test{
     fn process(){
         let rocket_server = rocket::ignite().mount("/", routes![process]);
         let client = Client::new(rocket_server).expect("valid rocket instance");
-        let response = client.get("/charizard").dispatch();
+        let response = client.get("/pokemon/charizard").dispatch();
 
         assert_eq!(response.status(), Status::Ok);
     
