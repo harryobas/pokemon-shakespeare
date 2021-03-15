@@ -34,21 +34,20 @@ pub fn get_pokemon_description(pokemon_name: &str)
     let mut pokemon_description = String::new();
 
     let body = get(&uri)?.text()?;
-    
     let fragment = Html::parse_document(&body);
-    let selector = Selector::parse("p.version-x").expect("parse error");
 
-    for element in fragment.select(&selector) {
-        let mut elem_text = element.text().collect::<Vec<_>>();
+    if let Ok(selector) = Selector::parse("p.version-x") {
+        for element in fragment.select(&selector) {
+            let mut elem_text = element.text().collect::<Vec<_>>();
 
-        if let Some(text) = elem_text.pop() {
-            pokemon_description.push_str(text.trim())  
+            if let Some(text) = elem_text.pop() {
+                pokemon_description.push_str(text.trim());
+            }
         }
-
+        
     }
 
     Ok(pokemon_description)
-
 }
 
 pub fn shakespeare_translate(pokemon_description: &str) 
