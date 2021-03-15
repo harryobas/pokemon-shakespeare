@@ -8,13 +8,13 @@ extern crate serde_json;
 
 use serde_derive::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize)]
  pub struct TranslatedPokemon{
      pub contents: Contents
 
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize)]
  pub struct Contents{
     pub translated: String,
 }
@@ -62,10 +62,8 @@ pub fn shakespeare_translate(pokemon_description: &str)
 
     let client = Client::new();
 
-    let resp = client.post(URL).form(&params)
-        .send()?.text()?;
-
-    let translated_pokemon: TranslatedPokemon = serde_json::from_str(&resp).expect("faild to parse json");
+    let resp = client.post(URL).form(&params).send()?.text()?;
+    let translated_pokemon: TranslatedPokemon = serde_json::from_str(&resp)?;
 
     Ok(translated_pokemon)
 }
