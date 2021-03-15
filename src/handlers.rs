@@ -19,9 +19,12 @@ pub fn process(pokemon_name: String) -> Result<Json<Pokemon>, Status>{
 }
 
 fn translate(pokemon: &str, description: &str) -> Pokemon{
-    let t_pokemon = shakespeare_translate(description);
-    let pokemon_description = Pokemon{name: pokemon.into(), 
-        description: t_pokemon.contents.translated};
+    let mut pokemon_description: Pokemon = Default::default();
+
+    if let Ok(t_pokemon) = shakespeare_translate(description) {
+        pokemon_description.name = pokemon.into();
+        pokemon_description.description = t_pokemon.contents.translated;    
+    }
 
     pokemon_description
 }
@@ -41,8 +44,6 @@ mod test{
         assert_eq!(response.status(), Status::Ok);
     
     }
-
-
 
 }
 
