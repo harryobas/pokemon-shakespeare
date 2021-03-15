@@ -27,6 +27,7 @@ pub struct Pokemon{
 
 pub fn get_pokemon_description(pokemon_name: &str) 
 -> Result<String, Box<dyn Error>> {
+    
     const URL: &str = "https://www.pokemon.com/us/pokedex/";
 
     let uri = format!("{}{}", URL, pokemon_name);

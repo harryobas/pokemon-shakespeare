@@ -5,11 +5,11 @@ use crate::pokemon::{get_pokemon_description,
 use rocket::http::Status;
 use rocket_contrib::json::Json;
 
-#[rocket::get("/<pokemon>")]
-pub fn process(pokemon: String) -> Result<Json<Pokemon>, Status>{
-    match get_pokemon_description(&pokemon){
+#[rocket::get("/pokemon/<pokemon_name>")]
+pub fn process(pokemon_name: String) -> Result<Json<Pokemon>, Status>{
+    match get_pokemon_description(&pokemon_name){
         Err(_e) => Err(Status::NotFound),
-        Ok(description) => Ok(Json(translate(&pokemon, &description)))
+        Ok(description) => Ok(Json(translate(&pokemon_name, &description)))
     }
 }
 
@@ -26,7 +26,7 @@ mod test{
     use super::*;
     use rocket::routes;
     use rocket::local::Client;
-    use rocket::http::Status;
+    //use rocket::http::Status;
 
     #[test]
     fn process(){
