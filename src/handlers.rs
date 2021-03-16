@@ -37,7 +37,7 @@ mod test{
     use rocket::http::ContentType;
 
     #[test]
-    fn test_process_with_valid_pokemon_name(){
+    fn test_describe_with_valid_pokemon_name(){
         let rocket_server = rocket::ignite().mount("/", routes![describe]);
         let client = Client::new(rocket_server).expect("valid rocket instance");
         let response = client.get("/pokemon/charizard").dispatch();
@@ -47,7 +47,7 @@ mod test{
     }
 
     #[test]
-    fn test_process_with_invalid_pokemon_name(){
+    fn test_describe_with_invalid_pokemon_name(){
         let rocket_server = rocket::ignite().mount("/", routes![describe]);
         let client = Client::new(rocket_server).expect("valid rocket instance");
         let response = client.get("/pokemon/perry").dispatch();
