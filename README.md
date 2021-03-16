@@ -30,6 +30,8 @@ pokemon-shakespeare provides a nifty, restful api endpoint for retriving the sha
 
 localhost:8000/pokemon/pokemon-name
 
+NB: pokemon-name should be replaced with the name of a specific pokemon for which a shakespearean description is desired. 
+
 
 
 
