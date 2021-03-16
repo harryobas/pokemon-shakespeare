@@ -12,7 +12,8 @@ pokemon-shakespeare provides a nifty, restful api endpoint for retriving the sha
 
 1. clone repo and change directory:
     ```
-    git clone https://github.com/harryobas/pokemon-shakespeare.git && cd pokemon-shakespeare
+    git clone https://github.com/harryobas/pokemon-shakespeare.git && \
+     cd pokemon-shakespeare
 
     ```
 2. set compiler version to nightly:
