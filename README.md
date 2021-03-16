@@ -26,6 +26,10 @@ pokemon-shakespeare provides a nifty, restful api endpoint for retriving the sha
 
     ```
 
+## API Endpoint
+
+localhost:8000/pokeman/<pokemon-name>
+
 
 
 
