@@ -4,7 +4,7 @@ pokemon-shakespeare provides a nifty, restful api endpoint for retriving the sha
 
 ## Requirements
 
-1. Rust toolchain
+1. Rust toolchain (https://www.rust-lang.org/tools/install)
 
 2. rustc 1.52.0-nightly (rocket.rs requires nightly version of the Rust compiler)
 
@@ -28,7 +28,7 @@ pokemon-shakespeare provides a nifty, restful api endpoint for retriving the sha
 
 ## API Endpoint
 
-localhost:8000/pokemon/[pokemon-name]
+localhost:8000/pokemon/pokemon-name
 
 
 
