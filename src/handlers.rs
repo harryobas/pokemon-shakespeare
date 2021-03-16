@@ -6,7 +6,7 @@ use rocket::http::Status;
 use rocket_contrib::json::Json;
 
 #[rocket::get("/pokemon/<pokemon_name>")]
-pub fn process(pokemon_name: String) -> Result<Json<Pokemon>, Status>{
+pub fn describe(pokemon_name: String) -> Result<Json<Pokemon>, Status>{
     match get_pokemon_description(&pokemon_name){
         Err(_e) => Err(Status::InternalServerError),
         Ok(description) => {
@@ -38,7 +38,7 @@ mod test{
 
     #[test]
     fn test_process_with_valid_pokemon_name(){
-        let rocket_server = rocket::ignite().mount("/", routes![process]);
+        let rocket_server = rocket::ignite().mount("/", routes![describe]);
         let client = Client::new(rocket_server).expect("valid rocket instance");
         let response = client.get("/pokemon/charizard").dispatch();
 
@@ -48,7 +48,7 @@ mod test{
 
     #[test]
     fn test_process_with_invalid_pokemon_name(){
-        let rocket_server = rocket::ignite().mount("/", routes![process]);
+        let rocket_server = rocket::ignite().mount("/", routes![describe]);
         let client = Client::new(rocket_server).expect("valid rocket instance");
         let response = client.get("/pokemon/perry").dispatch();
 
